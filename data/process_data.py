@@ -5,6 +5,15 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    @description - load data from two csv files to create one unified DataFrame
+
+    @input:
+             message_filepath: (string) with the path of the messages.csv file
+             categories_filepath: (string) with the path of categories.csv file
+    @output:
+             merged_df (DataFrame): messages and categories data merged together to one dataframe
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
 
@@ -13,7 +22,14 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    @description - Clean the merged dataframe by following these steps:
+                    1) rename the columns of different categories
+                    2) remove duplicates
 
+    @input - df (Dataframe) - unstructured and uncleaned data
+    @output - df(dataFrame) cleaned data from messages and categories merged dataframe
+    """
     categories = df["categories"].str.split(";", expand=True)
 
     row = categories.iloc[0]
@@ -31,6 +47,13 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    @description - Save processed data into a sqlite database
+
+    @input - df (dataframe): preprocessed and cleaned data
+
+    @output - None
+    """
     engine = create_engine(f"sqlite:///{database_filename}")
     df.to_sql("disaster_msg", engine, index=False, if_exists="replace")
 
