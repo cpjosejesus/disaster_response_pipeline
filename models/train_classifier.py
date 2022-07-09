@@ -22,7 +22,16 @@ warnings.filterwarnings("ignore")
 
 
 def load_data(database_filepath):
+    """
+    @description - load data from from a database
 
+    @input:
+             database_filepath: (string) File path where sql database was saved
+    @output:
+             X: Training message List.
+             Y: Training target.
+             category_names: Categorical name for labeling.
+    """
     engine = create_engine("sqlite:///" + database_filepath)
     df = pd.read_sql_table("disaster_msg", engine)
     X = df.message.values
@@ -33,6 +42,12 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    @input:
+             text: (string) Message data for tokenization.
+    @output:
+             clean_tokens: Result list after tokenization.
+    """
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -46,6 +61,13 @@ def tokenize(text):
 
 
 def build_model():
+    """
+
+    @input:
+             None
+    @output:
+             cv: GridSearch model result.
+    """
     pipeline = Pipeline(
         [
             ("vect", CountVectorizer(tokenizer=tokenize)),
@@ -68,6 +90,12 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    @input: model - model to be evaluated
+            X_test
+            Y_test
+            category names
+    """
     Y_pred = model.predict(X_test)
     print("-------------------------------")
     for i in range(Y_test.shape[1]):
@@ -75,6 +103,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+
     joblib.dump(model, model_filepath)
 
 
