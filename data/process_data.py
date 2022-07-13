@@ -42,6 +42,7 @@ def clean_data(df):
     df.drop("categories", axis=1, inplace=True)
 
     df = df.join(categories)
+    df = df[df.related != 2]
 
     return df.drop_duplicates()
 

@@ -99,7 +99,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
     Y_pred = model.predict(X_test)
     print("-------------------------------")
     for i in range(Y_test.shape[1]):
-        print("%25s accuracy : %.2f" % (category_names[i], accuracy_score(Y_test[:, i], Y_pred[:, i])))
+        print(category_names[i], classification_report(Y_test[:, i], Y_pred[:, i]))
+        print("-------------------------------")
 
 
 def save_model(model, model_filepath):
