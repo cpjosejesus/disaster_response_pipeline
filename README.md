@@ -1,5 +1,4 @@
 # Disaster Response Pipeline Project
-Udacity Data Science Nanodegree Project - Disaster message classifier web application
 
 ## Introduction
 If a disaster occurs in the world, disaster response organizations receive thousands of messages. In order to be able to react very promptly to such messages, a targeted classification using machine learning algorithms is required I have developed a web application so that experts from such organizations can quickly classify and forward such reports. The application uses a classifier that was trained on the data described below.
